@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Target from './components/target'
+import Targets from './components/targets'
 import './App.scss';
 
 class App extends Component {
@@ -12,6 +12,8 @@ class App extends Component {
 
         this.state = {
             targets: [],
+            targetsHit: 0,
+            targetsMissed: 0,
             maxWidth: maxWidth,
             maxHeight: maxHeight
         }
@@ -23,9 +25,21 @@ class App extends Component {
         }, 1000)
     }
 
+    hitTarget = (targetId) => {
+        var newTargets = [...this.state.targets];
+        newTargets.splice(targetId, 1);
+
+        this.setState({
+            targets: newTargets,
+            targetsHit: this.state.targetsHit + 1
+        })
+    }
+
     createTarget = () => {
         const randomWidth = Math.floor(Math.random() * this.state.maxWidth) + 1;
         const randomHeight = Math.floor(Math.random() * this.state.maxHeight) + 1;
+
+        
 
         this.setState({
             targets: [...this.state.targets, {
@@ -38,7 +52,11 @@ class App extends Component {
     render() {
         return (
             <div className="app">
-                <Target targets={this.state.targets} />
+                <div className="scoreboard">
+                    <div className="score">Targets Hit: {this.state.targetsHit}</div>
+                    <div className="score">Targets Missed: {this.state.targetsMissed}</div>
+                </div>
+                <Targets hitTarget={this.hitTarget} targets={this.state.targets} />
             </div>
         );
     }

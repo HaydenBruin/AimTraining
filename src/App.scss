@@ -11,6 +11,16 @@
         border-radius: 360px;
         position: absolute;
     }
+
+    .scoreboard {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(0,0,0,0.5);
+        padding: 10px;
+        border-radius: 15px;
+        color: #FFF;
+    }
 }
 
 

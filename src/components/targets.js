@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 
-export default class Target extends Component {
-
-    hitTarget = () => {
-        target
-    }
+export default class Targets extends Component {
 
     render() {
         const targets = this.props.targets;
@@ -15,7 +11,7 @@ export default class Target extends Component {
                 {
                     targets.map((element, index) => {
                         return (
-                            <div key={index} className="target" onClick={this.hitTarget} style={{ top: element.top + "px", left: element.left + "px" }}></div>
+                            <div key={index} className="target" onClick={() => this.props.hitTarget(index)} style={{ top: element.top + "px", left: element.left + "px" }}></div>
                         )
                     })
                 }
