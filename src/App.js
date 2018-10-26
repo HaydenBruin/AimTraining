@@ -34,15 +34,22 @@ class App extends Component {
             targetsHit: this.state.targetsHit + 1
         })
     }
+    
+    missTarget = () => {
+
+    }
 
     createTarget = () => {
         const randomWidth = Math.floor(Math.random() * this.state.maxWidth) + 1;
         const randomHeight = Math.floor(Math.random() * this.state.maxHeight) + 1;
 
-        
+        const destroyTarget = setTimeout(() => {
+            this.missTarget();
+        },5000)
 
         this.setState({
             targets: [...this.state.targets, {
+                destroy: destroyTarget,
                 top: randomHeight,
                 left: randomWidth
             }]
