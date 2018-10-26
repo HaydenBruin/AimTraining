@@ -2,8 +2,9 @@
     text-align: center;
     position: relative;
     height: 100vh;
-    height: 100vw;
+    width: 100vw;
     background: #eee;
+    overflow: hidden;
 
     .target {
         animation: target-resize infinite 5s ease;

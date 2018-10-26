@@ -13,16 +13,20 @@ class App extends Component {
         this.state = {
             targets: [],
             targetsHit: 0,
-            targetsMissed: 0,
             maxWidth: maxWidth,
-            maxHeight: maxHeight
+            maxHeight: maxHeight,
+            roundTimer: null
         }
     }
 
     componentDidMount = () => {
-        setInterval(() => {
+        const timer = setInterval(() => {
             this.createTarget();
-        }, 1000)
+        }, 1000);
+
+        this.setState({
+            roundTimer: timer
+        })
     }
 
     hitTarget = (targetId) => {
@@ -34,22 +38,13 @@ class App extends Component {
             targetsHit: this.state.targetsHit + 1
         })
     }
-    
-    missTarget = () => {
-
-    }
 
     createTarget = () => {
         const randomWidth = Math.floor(Math.random() * this.state.maxWidth) + 1;
         const randomHeight = Math.floor(Math.random() * this.state.maxHeight) + 1;
 
-        const destroyTarget = setTimeout(() => {
-            this.missTarget();
-        },5000)
-
         this.setState({
             targets: [...this.state.targets, {
-                destroy: destroyTarget,
                 top: randomHeight,
                 left: randomWidth
             }]
@@ -57,15 +52,27 @@ class App extends Component {
     }
 
     render() {
-        return (
-            <div className="app">
-                <div className="scoreboard">
-                    <div className="score">Targets Hit: {this.state.targetsHit}</div>
-                    <div className="score">Targets Missed: {this.state.targetsMissed}</div>
+        if(this.state.targets.length >= 10)
+        {
+            clearInterval(this.state.roundTimer);
+            return (
+                <div className="app">
+                    <h1>Sorry, You lose</h1>
                 </div>
-                <Targets hitTarget={this.hitTarget} targets={this.state.targets} />
-            </div>
-        );
+            )
+        }
+        else
+        {
+            return (
+                <div className="app">
+                    <div className="scoreboard">
+                        <div className="score">Targets Hit: {this.state.targetsHit}</div>
+                        <div className="score">Targets Active: {this.state.targets.length}/10</div>
+                    </div>
+                    <Targets hitTarget={this.hitTarget} targets={this.state.targets} />
+                </div>
+            );
+        }
     }
 }
 

@@ -4,7 +4,9 @@ export default class Targets extends Component {
 
     render() {
         const targets = this.props.targets;
-        if(targets.length === 0) return null;
+        if(targets.length === 0) return (
+            <div className="targets"></div>
+        )
 
         return (
             <div className="targets">
